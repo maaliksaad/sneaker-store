@@ -35,10 +35,20 @@ const LoginPage = () => {
     const {
         register,
         handleSubmit,
+        setValue,
+        watch,
         formState: { errors },
     } = useForm({
         resolver: yupResolver(loginSchema),
     });
+
+    const emailValue = watch("email");
+    const passwordValue = watch("password");
+
+    const handleDemoLogin = () => {
+        setValue("email", "user@example.com");
+        setValue("password", "password123");
+    };
 
     const onSubmit = async (data: any) => {
         try {
@@ -96,6 +106,7 @@ const LoginPage = () => {
                             {...register("email")}
                             error={!!errors.email}
                             helperText={errors.email?.message}
+                            InputLabelProps={{ shrink: !!emailValue }}
                             sx={{
                                 "& .MuiOutlinedInput-root": {
                                     borderRadius: "12px",
@@ -111,6 +122,7 @@ const LoginPage = () => {
                             {...register("password")}
                             error={!!errors.password}
                             helperText={errors.password?.message}
+                            InputLabelProps={{ shrink: !!passwordValue }}
                             InputProps={{
                                 endAdornment: (
                                     <InputAdornment position="end">
@@ -145,7 +157,28 @@ const LoginPage = () => {
                                 Forgot Password?
                             </Link>
                         </Box>
-
+                        <Button
+                            fullWidth
+                            variant="outlined"
+                            onClick={handleDemoLogin}
+                            sx={{
+                                mb: 3,
+                                py: 1.2,
+                                color: "#000",
+                                borderColor: "#000",
+                                borderRadius: "12px",
+                                fontSize: "14px",
+                                fontWeight: 600,
+                                textTransform: "none",
+                                "&:hover": {
+                                    bgcolor: "rgba(0,0,0,0.02)",
+                                    borderColor: "#000",
+                                    borderWidth: "1px"
+                                },
+                            }}
+                        >
+                            Use Demo Credentials
+                        </Button>
                         <Button
                             type="submit"
                             fullWidth
@@ -153,7 +186,7 @@ const LoginPage = () => {
                             disabled={isLoading}
                             sx={{
                                 mt: 2,
-                                mb: 3,
+                                mb: 2,
                                 py: 1.5,
                                 bgcolor: "#000",
                                 color: "#fff",
@@ -166,6 +199,8 @@ const LoginPage = () => {
                         >
                             {isLoading ? "Logging in..." : "Sign In"}
                         </Button>
+
+
 
                         <Typography variant="body2" sx={{ color: "text.secondary" }}>
                             Don't have an account?{" "}
