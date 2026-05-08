@@ -8,6 +8,7 @@ import theme from "@/lib/theme";
 import { Montserrat } from "next/font/google";
 import { Toaster } from "react-hot-toast";
 import { ReduxProvider } from "@/components/providers/ReduxProvider";
+import { ServerWarningModal } from "@/components/ui/ServerWarningModal";
 
 
 
@@ -33,6 +34,7 @@ export default function RootLayout({
             <ThemeProvider theme={theme}>
               <CssBaseline />
               <Toaster position="top-right" reverseOrder={false} />
+              <ServerWarningModal />
               {children}
             </ThemeProvider>
           </ReduxProvider>
